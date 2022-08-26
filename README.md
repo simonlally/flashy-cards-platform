@@ -1,24 +1,15 @@
-# README
+oh hello, readme ver 0.9 lol
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+built with:
+* ruby 3.0.1
+* rails 7.0.3.1
+* psql 14.4
 
-Things you may want to cover:
+clone the project
+- run `bundle`
+- run `yarn`
+- run `rake db:create`
+- run `rake db:migrate`
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+start the project
+- run `rails s`
