@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Auth
+  skip_before_action :verify_authenticity_token
 
   def authenticate_user
     if auth_present?
@@ -13,5 +14,11 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= authenticate_user
+  end
+
+  def validate_current_user
+    unless current_user.present?
+      return(render json: { status: "failed", error: "not authenticated" })
+    end
   end
 end
