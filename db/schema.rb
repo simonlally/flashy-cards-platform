@@ -23,9 +23,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_27_185739) do
   end
 
   create_table "flash_cards", force: :cascade do |t|
-    t.string "question"
-    t.string "answer"
-    t.integer "deck_id"
+    t.string "question", null: false
+    t.string "answer", null: false
+    t.integer "deck_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
