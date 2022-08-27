@@ -6,4 +6,5 @@ Rails.application.routes.draw do
 
   post "/decks" => "decks#create"
   post "/deck/:id/cards" => "flash_cards#create"
+  post "/deck/:id/card/:id" => "flash_cards#edit"
 end
