@@ -17,7 +17,7 @@ class FlashCardsController < ApplicationController
   end
 
   def edit
-    card_to_edit = deck.cards.find_by(id: params[:card_id])
+    card_to_edit = deck.flash_cards.find_by(id: params[:card_id])
     unless card_to_edit.present?
       return render json: { status: "failed", error: "no card found" }
     end
@@ -40,6 +40,6 @@ class FlashCardsController < ApplicationController
   end
 
   def deck
-    @deck ||= Deck.find_by(id: params[:deck_id])
+    @deck ||= current_user.decks.find_by(id: params[:deck_id])
   end
 end
