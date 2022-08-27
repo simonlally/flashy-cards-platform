@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def create
     if params[:email].present? && params[:password].present?
       existing_user = User.find_by(email: params[:email])
