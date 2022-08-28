@@ -2,19 +2,32 @@ class UsersController < ApplicationController
   def create
     if params[:email].present? && params[:password].present?
       existing_user = User.find_by(email: params[:email])
-      unless existing_user
-        user = User.create(email: params[:email], password: params[:password])
+
+      if existing_user
+        return(
+          render json: {
+                   status: "failed",
+                   error: "a user already exists with that email"
+                 }
+        )
+      end
+
+      user = User.create(email: params[:email], password: params[:password])
+
+      if user
         render json: {
                  status: "ok!",
-                 email: user.email.to_json,
+                 email: user.email,
                  token: user.generate_jwt
                }
       end
     else
-      render json:
-               OpenStruct.new(
-                 error: "bruh send real params, email and a username"
-               )
+      return(
+        render json:
+                 OpenStruct.new(
+                   error: "bruh send real params, email and a username"
+                 )
+      )
     end
   end
 
