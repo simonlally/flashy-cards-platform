@@ -16,6 +16,14 @@ class FlashCardsController < ApplicationController
     end
   end
 
+  def show
+    unless card_in_question.present?
+      return render json: { status: "failed", error: "no card found" }
+    end
+
+    render json: { data: { card: card_in_question } }
+  end
+
   def edit
     unless card_in_question.present?
       return render json: { status: "failed", error: "no card found" }
@@ -25,7 +33,11 @@ class FlashCardsController < ApplicationController
     updated_params[:question] = params[:question] if params[:question].present?
     updated_params[:answer] = params[:answer] if params[:answer].present?
 
-    card_to_edit.update(updated_params)
+    if card_to_edit.update(updated_params)
+      render json: { status: "sucess", data: { card: card_to_edit.reload } }
+    else
+      render json: { status: "failed", error: "something went wrong" }
+    end
   end
 
   def destroy
