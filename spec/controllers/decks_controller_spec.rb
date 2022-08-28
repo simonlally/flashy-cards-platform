@@ -22,7 +22,7 @@ RSpec.describe DecksController, type: :controller do
       )
     end
 
-    let!(:dave) { create(:user) }
+    let!(:dave) { create(:user, email: "daverias@aol.com") }
     let!(:daves_deck) { create(:deck, user: dave) }
     let!(:third_card) do
       create(

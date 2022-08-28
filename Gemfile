@@ -15,6 +15,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
+gem "simplecov", require: false, group: :test
 
 group :development, :test do
   gem "pry-rails"
@@ -22,6 +23,7 @@ group :development, :test do
   gem "guard"
   gem "guard-rspec"
   gem "factory_bot_rails"
+  gem "faker"
   gem "byebug", platforms: %i[mri mingw x64_mingw]
 end
 

@@ -13,6 +13,6 @@ FactoryBot.define do
   factory :user do
     email { "jebroni@aol.com" }
     password { "peanutsauce" }
-    username { "chadbinga" }
+    username { Faker::Name.unique.name }
   end
 end
