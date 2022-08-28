@@ -11,8 +11,8 @@
 #
 FactoryBot.define do
   factory :deck do
-    name { "MyString" }
-    label { "MyString" }
-    user_id { 1 }
+    name { "my best pokemon deck" }
+    label { "pokemon" }
+    user_id { create(:user).id }
   end
 end
