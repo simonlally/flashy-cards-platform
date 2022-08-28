@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   post "/decks/:id" => "decks#edit"
   post "/deck/:id/cards" => "flash_cards#create"
   post "/deck/:id/card/:id" => "flash_cards#edit"
+  delete "/deck/:id" => "decks#destroy"
+  delete "/deck/:id/card/:id" => "flash_cards#destroy"
 end

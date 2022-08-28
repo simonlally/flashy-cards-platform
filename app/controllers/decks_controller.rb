@@ -37,8 +37,7 @@ class DecksController < ApplicationController
   end
 
   def edit
-    deck_to_edit = current_user.decks.find_by(id: params[:deck_id])
-    unless deck_to_edit
+    unless deck
       return(
         render json: { status: "failed", error: "couldn't find deck to edit" }
       )
@@ -48,8 +47,8 @@ class DecksController < ApplicationController
     updated_params[:name] = params[:name] if params[:name].present?
     updated_params[:label] = params[:label] if params[:label].present?
 
-    if deck_to_update.update(updated_params)
-      updated_deck = deck_to_update.reload
+    if deck.update(updated_params)
+      updated_deck = deck.reload
       render json: {
                status: "success",
                data: {
@@ -63,18 +62,35 @@ class DecksController < ApplicationController
   end
 
   def show
-    deck_to_show = current_user.decks.find_by(id: params[:deck_id])
-    unless deck_to_show
+    unless deck
       return(
         render json: { status: "failed", error: "couldn't find deck to show" }
       )
     end
 
-    render json: {
-             data: {
-               deck: deck_to_show,
-               cards: deck_to_show.flash_cards
+    render json: { data: { deck: deck, cards: deck.flash_cards } }
+  end
+
+  def destroy
+    unless deck
+      return(
+        render json: { status: "failed", error: "couldn't find deck to delete" }
+      )
+    end
+
+    if deck.destroy
+      render json: {
+               status: "success",
+               message: "Deck #{deck.name} was successfully deleted."
              }
-           }
+    else
+      render json: { status: "failure", message: "deletion failed. try again" }
+    end
+  end
+
+  private
+
+  def deck
+    @deck ||= current_user.decks.find_by(id: params[:deck_id])
   end
 end

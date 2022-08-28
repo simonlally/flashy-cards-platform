@@ -17,8 +17,7 @@ class FlashCardsController < ApplicationController
   end
 
   def edit
-    card_to_edit = deck.flash_cards.find_by(id: params[:card_id])
-    unless card_to_edit.present?
+    unless card_in_question.present?
       return render json: { status: "failed", error: "no card found" }
     end
 
@@ -29,6 +28,18 @@ class FlashCardsController < ApplicationController
     card_to_edit.update(updated_params)
   end
 
+  def destroy
+    unless card_in_question.present?
+      return render json: { status: "failed", error: "no card found" }
+    end
+
+    if card_in_question.destroy
+      render json: { status: "success", message: "deletion successful" }
+    else
+      render json: { status: "failed", message: "something went wrong" }
+    end
+  end
+
   private
 
   def check_for_deck
@@ -37,6 +48,10 @@ class FlashCardsController < ApplicationController
         render json: { status: "failed", error: "unable to find existing deck" }
       )
     end
+  end
+
+  def card_in_question
+    @card_in_question ||= deck.flash_cards.find_by(id: params[:card_id])
   end
 
   def deck
