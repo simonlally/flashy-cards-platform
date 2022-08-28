@@ -53,7 +53,20 @@ RSpec.describe DecksController, type: :controller do
     end
 
     it "only returns records belong to the current_user" do
+      allow_any_instance_of(DecksController).to receive(:current_user) { dave }
       get :index, params: {}
+
+      parsed_response =
+        JSON.parse(response.body).dig(
+          "data",
+          "decks",
+          "deck_id_#{daves_deck.id}"
+        )
+      deck = parsed_response["deck"]
+      expect(deck["id"]).to eq daves_deck.id
+      expect(deck["id"]).to_not eq deck_uno.id
+      expect(parsed_response["cards"].first["id"]).to eq third_card.id
+      expect(parsed_response["cards"].first["deck_id"]).to eq daves_deck.id
     end
   end
 end
