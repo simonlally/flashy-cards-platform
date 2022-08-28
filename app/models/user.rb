@@ -14,7 +14,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :password, presence: true
 
-  has_many :decks
+  has_many :decks, dependent: :destroy
 
   def generate_jwt
     JWT.encode({ id: id, exp: 7.days.from_now.to_i }, ENV["JWT_SECRET_KEY"])
