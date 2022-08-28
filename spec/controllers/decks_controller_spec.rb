@@ -115,6 +115,19 @@ RSpec.describe DecksController, type: :controller do
     end
   end
 
+  describe "#show" do
+    it "shows the deck and cards that correspond with the id in params" do
+      get :show, params: { id: deck_uno.id, deck_id: deck_uno.id }
+
+      data = JSON.parse(response.body)["data"]
+
+      expect(data["deck"]["id"]).to eq deck_uno.id
+      expect(data["deck"]["name"]).to eq deck_uno.name
+      expect(data["cards"].first["id"]).to eq card.id
+      expect(data["cards"].second["id"]).to eq second_card.id
+    end
+  end
+
   describe "#edit" do
     it "updates the name of the deck" do
       expect(deck_uno.name).to eq "garbage"
