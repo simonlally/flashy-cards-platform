@@ -51,7 +51,7 @@ RSpec.describe FlashCardsController, type: :controller do
       c = card.reload
       expect(c.question).to eq "what animal goes meow?"
       expect(c.answer).to eq "cat"
-      expect(JSON.parse(response.body)["status"]).to eq("sucess")
+      expect(JSON.parse(response.body)["status"]).to eq(200)
     end
   end
 end

@@ -13,7 +13,7 @@ class DecksController < ApplicationController
     unless params[:name].present?
       return(
         render json: {
-                 status: "failed",
+                 status: 400,
                  error: "name is a required param when creating a deck"
                }
       )
@@ -24,13 +24,13 @@ class DecksController < ApplicationController
 
     if deck.persisted?
       render json: {
-               status: "success",
+               status: 200,
                message: "Deck #{deck.name} was successfully created",
                deck_id: deck.id
              }
     else
       render json: {
-               status: "failed",
+               status: 500,
                message: "There was an issue creating the deck, try again"
              }
     end
@@ -39,7 +39,7 @@ class DecksController < ApplicationController
   def edit
     unless deck
       return(
-        render json: { status: "failed", error: "couldn't find deck to edit" }
+        render json: { status: 404, error: "couldn't find deck to edit" }
       )
     end
 
@@ -50,21 +50,21 @@ class DecksController < ApplicationController
     if deck.update(updated_params)
       updated_deck = deck.reload
       render json: {
-               status: "success",
+               status: 200,
                data: {
                  deck: updated_deck,
                  cards: updated_deck.flash_cards
                }
              }
     else
-      render json: { status: "failed", error: "something went wrong" }
+      render json: { status:500, error: "something went wrong" }
     end
   end
 
   def show
     unless deck
       return(
-        render json: { status: "failed", error: "couldn't find deck to show" }
+        render json: { status: 404, error: "couldn't find deck to show" }
       )
     end
 
@@ -74,17 +74,17 @@ class DecksController < ApplicationController
   def destroy
     unless deck
       return(
-        render json: { status: "failed", error: "couldn't find deck to delete" }
+        render json: { status: 404, error: "couldn't find deck to delete" }
       )
     end
 
     if deck.destroy
       render json: {
-               status: "success",
+               status: 200,
                message: "Deck #{deck.name} was successfully deleted."
              }
     else
-      render json: { status: "failure", message: "deletion failed. try again" }
+      render json: { status: 500, message: "deletion failed. try again" }
     end
   end
 

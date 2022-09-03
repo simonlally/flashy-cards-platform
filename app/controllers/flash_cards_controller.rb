@@ -10,7 +10,7 @@ class FlashCardsController < ApplicationController
 
     if new_flash_card.persisted?
       render json: {
-               status: "success",
+               status: 200,
                message: "new flashcard successfully created."
              }
     end
@@ -18,7 +18,7 @@ class FlashCardsController < ApplicationController
 
   def show
     unless card_in_question.present?
-      return render json: { status: "failed", error: "no card found" }
+      return render json: { status: 404, error: "no card found" }
     end
 
     render json: { data: { card: card_in_question } }
@@ -26,7 +26,7 @@ class FlashCardsController < ApplicationController
 
   def edit
     unless card_in_question.present?
-      return render json: { status: "failed", error: "no card found" }
+      return render json: { status: 404, error: "no card found" }
     end
 
     updated_params = {}
@@ -34,21 +34,21 @@ class FlashCardsController < ApplicationController
     updated_params[:answer] = params[:answer] if params[:answer].present?
 
     if card_in_question.update(updated_params)
-      render json: { status: "sucess", data: { card: card_in_question.reload } }
+      render json: { status: 200, data: { card: card_in_question.reload } }
     else
-      render json: { status: "failed", error: "something went wrong" }
+      render json: { status: 400, error: "something went wrong" }
     end
   end
 
   def destroy
     unless card_in_question.present?
-      return render json: { status: "failed", error: "no card found" }
+      return render json: { status: 404, error: "no card found" }
     end
 
     if card_in_question.destroy
-      render json: { status: "success", message: "deletion successful" }
+      render json: { status: 200, message: "deletion successful" }
     else
-      render json: { status: "failed", message: "something went wrong" }
+      render json: { status: 500, message: "something went wrong" }
     end
   end
 
@@ -57,7 +57,7 @@ class FlashCardsController < ApplicationController
   def check_for_deck
     unless deck
       return(
-        render json: { status: "failed", error: "unable to find existing deck" }
+        render json: { status: 404, error: "unable to find existing deck" }
       )
     end
   end
