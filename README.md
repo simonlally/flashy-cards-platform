@@ -13,3 +13,6 @@ clone the project
 
 start the project
 - run `rails s`
+
+run tests
+- run `rspec`

@@ -32,9 +32,10 @@ RSpec.describe UsersController, type: :controller do
     it "returns an error if we dont have correct args" do
       post :create, params: {}
       json_body = JSON.parse(response.body)
-      expect(json_body["table"]["error"]).to eq(
+      expect(json_body["error"]).to eq(
         "bruh send real params, email and a username"
       )
+      expect(json_body["status"]).to eq(400)
     end
 
     context "the email already exists" do
@@ -46,6 +47,7 @@ RSpec.describe UsersController, type: :controller do
         expect(json_body["error"]).to eq(
           "a user already exists with that email"
         )
+        expect(json_body["status"]).to eq(400)
       end
 
       it "does not create a new user" do

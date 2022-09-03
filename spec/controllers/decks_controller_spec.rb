@@ -85,7 +85,7 @@ RSpec.describe DecksController, type: :controller do
         expect(new_deck.name).to eq "Sprinkles"
         expect(JSON.parse(response.body)).to eq(
           {
-            "status" => "success",
+            "status" => 200,
             "message" => "Deck #{new_deck.name} was successfully created",
             "deck_id" => new_deck.id
           }

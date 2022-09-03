@@ -6,7 +6,7 @@ class UsersController < ApplicationController
       if existing_user
         return(
           render json: {
-                   status: "failed",
+                   status: 400,
                    error: "a user already exists with that email"
                  }
         )
@@ -23,10 +23,10 @@ class UsersController < ApplicationController
       end
     else
       return(
-        render json:
-                 OpenStruct.new(
-                   error: "bruh send real params, email and a username"
-                 )
+        render json: {
+                   error: "bruh send real params, email and a username",
+                   status: 400
+              }
       )
     end
   end
@@ -36,20 +36,20 @@ class UsersController < ApplicationController
       user = User.find_by(email: params[:email])
       unless user
         render json: {
-                 status: "sadge",
+                 status: 404,
                  error: "no user exists with this email"
                }
       end
 
       unless user.authenticate(params[:password])
         render json: {
-                 status: "sadge",
+                 status: 401,
                  error: "password is incorrect",
                  token: nil
                }
       end
 
-      render json: { status: "ok!", token: user.generate_jwt }
+      render json: { status: 200, token: user.generate_jwt }
     end
   end
 end
