@@ -15,6 +15,7 @@ gem "stimulus-rails"
 gem "jbuilder"
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", require: false
+gem "rack-cors"
 gem "simplecov", require: false, group: :test
 
 group :development, :test do
