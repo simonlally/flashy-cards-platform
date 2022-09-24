@@ -11,8 +11,8 @@
 #
 FactoryBot.define do
   factory :flash_card do
-    question { "MyString" }
-    answer { "MyString" }
+    question { 'MyString' }
+    answer { 'MyString' }
     deck_id { 1 }
   end
 end

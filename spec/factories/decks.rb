@@ -11,8 +11,14 @@
 #
 FactoryBot.define do
   factory :deck do
-    name { "my best pokemon deck" }
-    label { "pokemon" }
+    name { 'my best pokemon deck' }
+    label { 'pokemon' }
     user_id { create(:user).id }
+
+    trait :with_flash_cards do
+      after(:create) do |deck|
+        create_list(:flash_card, 5, deck_id: deck.id)
+      end
+    end
   end
 end
