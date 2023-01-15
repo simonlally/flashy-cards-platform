@@ -30,7 +30,6 @@ end
 
 group :development do
   gem "annotate"
-  gem "factory_bot_rails"
   gem "web-console", ">= 3.3.0"
   gem "listen", "~> 3.2"
   gem "prettier"
